@@ -8,7 +8,7 @@ export default function HomePage() {
       <section className="relative h-[80vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/hero-brazil.jpg"
+            src="https://via.placeholder.com/1920x1080/31343C/FFFFFF?text=p"
             alt="Bela paisagem brasileira"
             fill
             className="object-cover"
