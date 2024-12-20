@@ -9,9 +9,9 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
   const router = useRouter();
-  const isPortuguese = pathname?.startsWith('/pt') ?? false;
+  const isPortuguese = pathname.startsWith('/pt');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,7 +24,6 @@ export function Header() {
   }, []);
 
   const toggleLanguage = () => {
-    if (!pathname) return;
     const newPath = isPortuguese ? pathname.replace('/pt', '/en') : pathname.replace('/en', '/pt');
     router.push(newPath || (isPortuguese ? '/en' : '/pt'));
   };
@@ -38,36 +37,36 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={pathname?.startsWith('/pt') ? '/pt' : '/'} className="text-2xl font-bold text-primary">
+          <Link href={isPortuguese ? '/pt' : '/'} className="text-2xl font-bold text-primary">
             Brazil Travel
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
-              href={pathname?.startsWith('/pt') ? '/pt/tours/dubai' : '/en/tours/dubai'}
+              href={isPortuguese ? '/pt/tours/dubai' : '/en/tours/dubai'}
               className="text-gray-700 hover:text-primary"
             >
-              {pathname?.startsWith('/pt') ? 'Dubai' : 'Dubai'}
+              {isPortuguese ? 'Dubai' : 'Dubai'}
             </Link>
             <Link
-              href={pathname?.startsWith('/pt') ? '/pt/about' : '/en/about'}
+              href={isPortuguese ? '/pt/about' : '/en/about'}
               className="text-gray-700 hover:text-primary"
             >
-              {pathname?.startsWith('/pt') ? 'Sobre' : 'About'}
+              {isPortuguese ? 'Sobre' : 'About'}
             </Link>
             <Link
-              href={pathname?.startsWith('/pt') ? '/pt/contact' : '/en/contact'}
+              href={isPortuguese ? '/pt/contact' : '/en/contact'}
               className="text-gray-700 hover:text-primary"
             >
-              {pathname?.startsWith('/pt') ? 'Contato' : 'Contact'}
+              {isPortuguese ? 'Contato' : 'Contact'}
             </Link>
             <button
               onClick={toggleLanguage}
               className="flex items-center text-gray-700 hover:text-primary"
             >
               <Globe className="w-5 h-5 mr-1" />
-              {pathname?.startsWith('/pt') ? 'EN' : 'PT'}
+              {isPortuguese ? 'EN' : 'PT'}
             </button>
           </nav>
 
@@ -85,25 +84,25 @@ export function Header() {
           <nav className="md:hidden py-4">
             <div className="flex flex-col space-y-4">
               <Link
-                href={pathname?.startsWith('/pt') ? '/pt/tours/dubai' : '/en/tours/dubai'}
+                href={isPortuguese ? '/pt/tours/dubai' : '/en/tours/dubai'}
                 className="text-gray-700 hover:text-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {pathname?.startsWith('/pt') ? 'Dubai' : 'Dubai'}
+                {isPortuguese ? 'Dubai' : 'Dubai'}
               </Link>
               <Link
-                href={pathname?.startsWith('/pt') ? '/pt/about' : '/en/about'}
+                href={isPortuguese ? '/pt/about' : '/en/about'}
                 className="text-gray-700 hover:text-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {pathname?.startsWith('/pt') ? 'Sobre' : 'About'}
+                {isPortuguese ? 'Sobre' : 'About'}
               </Link>
               <Link
-                href={pathname?.startsWith('/pt') ? '/pt/contact' : '/en/contact'}
+                href={isPortuguese ? '/pt/contact' : '/en/contact'}
                 className="text-gray-700 hover:text-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {pathname?.startsWith('/pt') ? 'Contato' : 'Contact'}
+                {isPortuguese ? 'Contato' : 'Contact'}
               </Link>
               <button
                 onClick={() => {
@@ -113,7 +112,7 @@ export function Header() {
                 className="flex items-center text-gray-700 hover:text-primary"
               >
                 <Globe className="w-5 h-5 mr-1" />
-                {pathname?.startsWith('/pt') ? 'EN' : 'PT'}
+                {isPortuguese ? 'EN' : 'PT'}
               </button>
             </div>
           </nav>
