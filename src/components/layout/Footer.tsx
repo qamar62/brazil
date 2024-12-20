@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 export function Footer() {
   const pathname = usePathname();
-  const isPortuguese = pathname.startsWith('/pt');
+  const isPortuguese = pathname?.startsWith('/pt') ?? false;
 
   return (
     <footer className="bg-gray-100 dark:bg-gray-800 py-12 mt-auto">
@@ -58,17 +58,21 @@ export function Footer() {
           {/* Contact Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-bold">{isPortuguese ? 'Contato' : 'Contact'}</h3>
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600 dark:text-gray-300">📧 info@braziltravel.com</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300">📱 +55 21 9999-9999</p>
-            </div>
+            <ul className="space-y-2">
+              <li className="text-sm text-gray-600 dark:text-gray-300">
+                Email: info@braziltravel.com
+              </li>
+              <li className="text-sm text-gray-600 dark:text-gray-300">
+                {isPortuguese ? 'Telefone' : 'Phone'}: +55 21 1234-5678
+              </li>
+            </ul>
           </div>
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            &copy; 2024 Brazil Travel. {isPortuguese ? 'Todos os direitos reservados.' : 'All rights reserved.'}
+        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-center text-sm text-gray-600 dark:text-gray-300">
+            {new Date().getFullYear()} Brazil Travel. {isPortuguese ? 'Todos os direitos reservados.' : 'All rights reserved.'}
           </p>
         </div>
       </div>
