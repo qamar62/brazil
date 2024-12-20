@@ -18,7 +18,7 @@ export default function DubaiToursPage({
   const featuredTour = tours[0]; // Evening Desert Safari is the featured tour
 
   return (
-    <main className="flex-1">
+    <div className="flex-1">
       {/* Hero Section with Featured Tour */}
       <section className="relative min-h-[35vh] w-full mt-8">
         <div className="absolute inset-0 w-full h-full">
@@ -115,6 +115,6 @@ export default function DubaiToursPage({
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

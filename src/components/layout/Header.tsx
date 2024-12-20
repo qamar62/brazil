@@ -3,16 +3,16 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isToursDropdownOpen, setIsToursDropdownOpen] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
   
-  // Type guard function
   function getIsPortuguese(path: string | null): boolean {
     return path?.startsWith('/pt') ?? false;
   }
@@ -29,105 +29,130 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleLanguage = () => {
-    if (!pathname) {
-      router.push(isPortuguese ? '/en' : '/pt');
-      return;
-    }
-    const newPath = isPortuguese ? pathname.replace('/pt', '/en') : pathname.replace('/en', '/pt');
-    router.push(newPath || (isPortuguese ? '/en' : '/pt'));
+  const handleLanguageSwitch = () => {
+    const newLocale = isPortuguese ? 'en' : 'pt';
+    const newPath = pathname?.replace(isPortuguese ? '/pt' : '/en', `/${newLocale}`);
+    router.push(newPath ?? '/');
   };
+
+  const navLinks = [
+    { href: '/', label: isPortuguese ? 'Início' : 'Home' },
+    { href: '/about', label: isPortuguese ? 'Sobre' : 'About' },
+  ];
+
+  const tourLinks = [
+    { href: '/tours/dubai', label: isPortuguese ? 'Dubai' : 'Dubai' },
+    { href: '/tours/brazil', label: isPortuguese ? 'Brasil' : 'Brazil' },
+  ];
 
   return (
     <header
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-md' : 'bg-transparent'
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md' : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href={isPortuguese ? '/pt' : '/'} className="text-2xl font-bold text-primary">
+      <nav className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-primary">
             Brazil Travel
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              href={isPortuguese ? '/pt/tours/dubai' : '/en/tours/dubai'}
-              className="text-gray-700 hover:text-primary"
-            >
-              {isPortuguese ? 'Dubai' : 'Dubai'}
-            </Link>
-            <Link
-              href={isPortuguese ? '/pt/about' : '/en/about'}
-              className="text-gray-700 hover:text-primary"
-            >
-              {isPortuguese ? 'Sobre' : 'About'}
-            </Link>
-            <Link
-              href={isPortuguese ? '/pt/contact' : '/en/contact'}
-              className="text-gray-700 hover:text-primary"
-            >
-              {isPortuguese ? 'Contato' : 'Contact'}
-            </Link>
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={`${isPortuguese ? '/pt' : '/en'}${link.href}`}
+                className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            {/* Tours Dropdown */}
+            <div className="relative group">
+              <button
+                onClick={() => setIsToursDropdownOpen(!isToursDropdownOpen)}
+                className="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+              >
+                {isPortuguese ? 'Passeios' : 'Tours'}
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+              <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                {tourLinks.map((tour) => (
+                  <Link
+                    key={tour.href}
+                    href={`${isPortuguese ? '/pt' : '/en'}${tour.href}`}
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    {tour.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
             <button
-              onClick={toggleLanguage}
-              className="flex items-center text-gray-700 hover:text-primary"
+              onClick={handleLanguageSwitch}
+              className="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
             >
-              <Globe className="w-5 h-5 mr-1" />
+              <Globe className="h-5 w-5 mr-1" />
               {isPortuguese ? 'EN' : 'PT'}
             </button>
-          </nav>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-700"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-gray-700 dark:text-gray-300"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <nav className="md:hidden py-4">
-            <div className="flex flex-col space-y-4">
+          <div className="md:hidden mt-4 space-y-4">
+            {navLinks.map((link) => (
               <Link
-                href={isPortuguese ? '/pt/tours/dubai' : '/en/tours/dubai'}
-                className="text-gray-700 hover:text-primary"
+                key={link.href}
+                href={`${isPortuguese ? '/pt' : '/en'}${link.href}`}
+                className="block text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {isPortuguese ? 'Dubai' : 'Dubai'}
+                {link.label}
               </Link>
-              <Link
-                href={isPortuguese ? '/pt/about' : '/en/about'}
-                className="text-gray-700 hover:text-primary"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {isPortuguese ? 'Sobre' : 'About'}
-              </Link>
-              <Link
-                href={isPortuguese ? '/pt/contact' : '/en/contact'}
-                className="text-gray-700 hover:text-primary"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {isPortuguese ? 'Contato' : 'Contact'}
-              </Link>
-              <button
-                onClick={() => {
-                  toggleLanguage();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="flex items-center text-gray-700 hover:text-primary"
-              >
-                <Globe className="w-5 h-5 mr-1" />
-                {isPortuguese ? 'EN' : 'PT'}
-              </button>
+            ))}
+            
+            {/* Mobile Tours Menu */}
+            <div className="space-y-2">
+              <div className="font-medium text-gray-700 dark:text-gray-300">
+                {isPortuguese ? 'Passeios' : 'Tours'}
+              </div>
+              {tourLinks.map((tour) => (
+                <Link
+                  key={tour.href}
+                  href={`${isPortuguese ? '/pt' : '/en'}${tour.href}`}
+                  className="block pl-4 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {tour.label}
+                </Link>
+              ))}
             </div>
-          </nav>
+
+            <button
+              onClick={() => {
+                handleLanguageSwitch();
+                setIsMobileMenuOpen(false);
+              }}
+              className="flex items-center text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+            >
+              <Globe className="h-5 w-5 mr-1" />
+              {isPortuguese ? 'EN' : 'PT'}
+            </button>
+          </div>
         )}
-      </div>
+      </nav>
     </header>
   );
 }
