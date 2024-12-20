@@ -26,10 +26,10 @@ export const destinations: Destination[] = [
 
 export const tours: Tour[] = [
   {
-    id: '1',
+    id: 'rio-highlights',
     title: 'Rio Highlights Tour',
     description: 'Visit Christ the Redeemer, Sugarloaf Mountain, and Copacabana Beach',
-    image: '/images/tours/rio-tour.jpg',
+    image: 'https://via.placeholder.com/800x600?text=Rio+Highlights',
     price: {
       USD: 149,
       BRL: 745
@@ -37,35 +37,53 @@ export const tours: Tour[] = [
     duration: '8 hours',
     location: 'Rio de Janeiro',
     rating: 4.8,
-    featured: true
+    highlights: [
+      'Christ the Redeemer statue',
+      'Sugarloaf Mountain cable car',
+      'Copacabana Beach visit',
+      'Local guide',
+      'Hotel pickup and drop-off'
+    ]
   },
   {
-    id: '2',
+    id: 'amazon-expedition',
     title: 'Amazon Expedition',
     description: '3-day adventure in the heart of the Amazon rainforest',
-    image: '/images/tours/amazon-tour.jpg',
+    image: 'https://via.placeholder.com/800x600?text=Amazon+Expedition',
     price: {
       USD: 599,
       BRL: 2995
     },
     duration: '3 days',
-    location: 'Manaus',
+    location: 'Manaus, Amazon',
     rating: 4.9,
-    featured: true
+    highlights: [
+      'Jungle trekking',
+      'Wildlife spotting',
+      'Indigenous community visit',
+      'Canopy walkway',
+      'River cruise'
+    ]
   },
   {
-    id: '3',
-    title: 'Beach Paradise Tour',
-    description: 'Explore the most beautiful beaches of Fernando de Noronha',
-    image: '/images/tours/noronha-tour.jpg',
+    id: 'noronha-paradise',
+    title: 'Noronha Paradise',
+    description: 'Explore the stunning beaches and marine life of Fernando de Noronha',
+    image: 'https://via.placeholder.com/800x600?text=Noronha+Paradise',
     price: {
-      USD: 299,
-      BRL: 1495
+      USD: 399,
+      BRL: 1995
     },
-    duration: '6 hours',
+    duration: '2 days',
     location: 'Fernando de Noronha',
-    rating: 5.0,
-    featured: true
+    rating: 4.9,
+    highlights: [
+      'Snorkeling with sea turtles',
+      'Boat tour around the island',
+      'Beach hopping',
+      'Sunset at Forte dos Remédios',
+      'Environmental preservation talk'
+    ]
   }
 ];
 
@@ -73,25 +91,25 @@ export const testimonials: Testimonial[] = [
   {
     id: '1',
     name: 'John Smith',
-    image: '/images/testimonials/person1.jpg',
-    text: 'An unforgettable experience in Rio! The tour guide was knowledgeable and friendly.',
+    image: 'https://via.placeholder.com/150',
+    text: 'Amazing experience in Rio! The tour guide was knowledgeable and friendly.',
     rating: 5,
     tourName: 'Rio Highlights Tour'
   },
   {
     id: '2',
     name: 'Maria Garcia',
-    image: '/images/testimonials/person2.jpg',
-    text: 'The Amazon expedition exceeded all my expectations. A must-do for nature lovers!',
+    image: 'https://via.placeholder.com/150',
+    text: 'The Amazon expedition exceeded all my expectations. Unforgettable!',
     rating: 5,
     tourName: 'Amazon Expedition'
   },
   {
     id: '3',
-    name: 'David Chen',
-    image: '/images/testimonials/person3.jpg',
-    text: 'Fernando de Noronha is paradise on Earth. This tour showed us all the best spots.',
+    name: 'David Wilson',
+    image: 'https://via.placeholder.com/150',
+    text: 'Fernando de Noronha is paradise on Earth. Perfect organization!',
     rating: 5,
-    tourName: 'Beach Paradise Tour'
+    tourName: 'Noronha Paradise'
   }
 ];

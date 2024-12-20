@@ -18,7 +18,7 @@ export interface Tour {
   duration: string;
   location: string;
   rating: number;
-  featured: boolean;
+  highlights: string[];
 }
 
 export interface Testimonial {
