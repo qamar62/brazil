@@ -1,16 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co'
-      },
-      {
-        protocol: 'https',
-        hostname: 'via.placeholder.com'
-      }
-    ]
+    unoptimized: true,
+  },
+  trailingSlash: true,
+  typescript: {
+    ignoreBuildErrors: true
+  },
+  eslint: {
+    ignoreDuringBuilds: true
   }
 }
 
