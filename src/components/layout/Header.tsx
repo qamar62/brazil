@@ -3,16 +3,23 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, Globe, ChevronDown } from 'lucide-react';
+import { Menu, X, Globe, ChevronDown, Sun, Moon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isToursDropdownOpen, setIsToursDropdownOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
 
   const pathname = usePathname();
   const router = useRouter();
   
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   function getIsPortuguese(path: string | null): boolean {
     return path?.startsWith('/pt') ?? false;
   }
@@ -98,15 +105,43 @@ export function Header() {
               <Globe className="h-5 w-5 mr-1" />
               {isPortuguese ? 'EN' : 'PT'}
             </button>
+
+            {/* Theme Toggle Button */}
+            <button
+              onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+              className="p-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+              aria-label="Toggle theme"
+            >
+              {mounted && (resolvedTheme === 'dark' ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              ))}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-gray-700 dark:text-gray-300"
-          >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="md:hidden flex items-center gap-4">
+            {/* Theme Toggle Button (Mobile) */}
+            <button
+              onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+              className="p-2 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors"
+              aria-label="Toggle theme"
+            >
+              {mounted && (resolvedTheme === 'dark' ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              ))}
+            </button>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-gray-700 dark:text-gray-300"
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
