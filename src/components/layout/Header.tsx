@@ -9,9 +9,15 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const pathname = usePathname() || '';
+  const pathname = usePathname();
   const router = useRouter();
-  const isPortuguese = pathname.startsWith('/pt');
+  
+  // Type guard function
+  function getIsPortuguese(path: string | null): boolean {
+    return path?.startsWith('/pt') ?? false;
+  }
+
+  const isPortuguese = getIsPortuguese(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +30,10 @@ export function Header() {
   }, []);
 
   const toggleLanguage = () => {
+    if (!pathname) {
+      router.push(isPortuguese ? '/en' : '/pt');
+      return;
+    }
     const newPath = isPortuguese ? pathname.replace('/pt', '/en') : pathname.replace('/en', '/pt');
     router.push(newPath || (isPortuguese ? '/en' : '/pt'));
   };
