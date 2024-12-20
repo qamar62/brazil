@@ -2,6 +2,13 @@ import Image from 'next/image';
 import { dubaiTours } from '@/data/dubai-tours';
 import { dubaiToursPt } from '@/data/dubai-tours.pt';
 
+export function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'pt' }
+  ];
+}
+
 export default function DubaiToursPage({
   params: { locale },
 }: {

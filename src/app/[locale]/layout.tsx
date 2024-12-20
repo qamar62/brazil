@@ -1,9 +1,16 @@
-import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
+
+export function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'pt' }
+  ];
+}
 
 export default function LocaleLayout({
   children,
-  params: { locale }
+  params: { locale },
 }: {
   children: React.ReactNode;
   params: { locale: string };

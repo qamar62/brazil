@@ -1,5 +1,12 @@
 import Image from 'next/image';
 
+export function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'pt' }
+  ];
+}
+
 export default function AboutPage({
   params: { locale },
 }: {

@@ -5,6 +5,13 @@ import { TourCard } from '@/components/cards/TourCard';
 import { TestimonialCard } from '@/components/cards/TestimonialCard';
 import { destinations, tours, testimonials } from '@/data/mock';
 
+export function generateStaticParams() {
+  return [
+    { locale: 'en' },
+    { locale: 'pt' }
+  ];
+}
+
 export default function Home({
   params: { locale },
 }: {
