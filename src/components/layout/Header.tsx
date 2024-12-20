@@ -38,36 +38,36 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={isPortuguese ? '/pt' : '/'} className="text-2xl font-bold text-primary">
+          <Link href={pathname?.startsWith('/pt') ? '/pt' : '/'} className="text-2xl font-bold text-primary">
             Brazil Travel
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
-              href={isPortuguese ? '/pt/tours/dubai' : '/en/tours/dubai'}
+              href={pathname?.startsWith('/pt') ? '/pt/tours/dubai' : '/en/tours/dubai'}
               className="text-gray-700 hover:text-primary"
             >
-              {isPortuguese ? 'Dubai' : 'Dubai'}
+              {pathname?.startsWith('/pt') ? 'Dubai' : 'Dubai'}
             </Link>
             <Link
-              href={isPortuguese ? '/pt/about' : '/en/about'}
+              href={pathname?.startsWith('/pt') ? '/pt/about' : '/en/about'}
               className="text-gray-700 hover:text-primary"
             >
-              {isPortuguese ? 'Sobre' : 'About'}
+              {pathname?.startsWith('/pt') ? 'Sobre' : 'About'}
             </Link>
             <Link
-              href={isPortuguese ? '/pt/contact' : '/en/contact'}
+              href={pathname?.startsWith('/pt') ? '/pt/contact' : '/en/contact'}
               className="text-gray-700 hover:text-primary"
             >
-              {isPortuguese ? 'Contato' : 'Contact'}
+              {pathname?.startsWith('/pt') ? 'Contato' : 'Contact'}
             </Link>
             <button
               onClick={toggleLanguage}
               className="flex items-center text-gray-700 hover:text-primary"
             >
               <Globe className="w-5 h-5 mr-1" />
-              {isPortuguese ? 'EN' : 'PT'}
+              {pathname?.startsWith('/pt') ? 'EN' : 'PT'}
             </button>
           </nav>
 
@@ -85,25 +85,25 @@ export function Header() {
           <nav className="md:hidden py-4">
             <div className="flex flex-col space-y-4">
               <Link
-                href={isPortuguese ? '/pt/tours/dubai' : '/en/tours/dubai'}
+                href={pathname?.startsWith('/pt') ? '/pt/tours/dubai' : '/en/tours/dubai'}
                 className="text-gray-700 hover:text-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {isPortuguese ? 'Dubai' : 'Dubai'}
+                {pathname?.startsWith('/pt') ? 'Dubai' : 'Dubai'}
               </Link>
               <Link
-                href={isPortuguese ? '/pt/about' : '/en/about'}
+                href={pathname?.startsWith('/pt') ? '/pt/about' : '/en/about'}
                 className="text-gray-700 hover:text-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {isPortuguese ? 'Sobre' : 'About'}
+                {pathname?.startsWith('/pt') ? 'Sobre' : 'About'}
               </Link>
               <Link
-                href={isPortuguese ? '/pt/contact' : '/en/contact'}
+                href={pathname?.startsWith('/pt') ? '/pt/contact' : '/en/contact'}
                 className="text-gray-700 hover:text-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {isPortuguese ? 'Contato' : 'Contact'}
+                {pathname?.startsWith('/pt') ? 'Contato' : 'Contact'}
               </Link>
               <button
                 onClick={() => {
@@ -113,7 +113,7 @@ export function Header() {
                 className="flex items-center text-gray-700 hover:text-primary"
               >
                 <Globe className="w-5 h-5 mr-1" />
-                {isPortuguese ? 'EN' : 'PT'}
+                {pathname?.startsWith('/pt') ? 'EN' : 'PT'}
               </button>
             </div>
           </nav>
