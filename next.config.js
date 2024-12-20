@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -25,6 +23,13 @@ const nextConfig = {
     'lucide-react': {
       transform: 'lucide-react/dist/esm/icons/{{member}}'
     }
+  },
+  webpack: (config) => {
+    config.watchOptions = {
+      poll: 1000,
+      aggregateTimeout: 300,
+    }
+    return config
   }
 }
 
