@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -11,9 +12,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'via.placeholder.com',
       }
-    ],
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    ]
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -21,6 +20,12 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  swcMinify: true,
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{member}}'
+    }
+  }
 }
 
 module.exports = nextConfig
