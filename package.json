@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "start": "NODE_ENV=production node app.js",
     "lint": "next lint"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "lucide-react": "^0.468.0",
     "next": "14.0.4",
     "react": "^18",
