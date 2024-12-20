@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
     unoptimized: true,
+    domains: ['placehold.co', 'via.placeholder.com']
   },
-  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true
   },
   eslint: {
     ignoreDuringBuilds: true
+  },
+  experimental: {
+    runtime: 'edge'
   }
 }
 

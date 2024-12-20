@@ -2,7 +2,14 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "out",
-  "framework": null,
+  "framework": "nextjs",
+  "regions": ["bom1"],
+  "functions": {
+    "app/**/*": {
+      "runtime": "edge",
+      "memory": 128
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
