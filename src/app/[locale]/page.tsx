@@ -62,7 +62,11 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {tours.map((tour) => (
-              <TourCard key={tour.id} tour={tour} />
+              <TourCard 
+                key={tour.id} 
+                tour={tour} 
+                currency={locale === 'pt' ? 'BRL' : 'USD'} 
+              />
             ))}
           </div>
         </div>
