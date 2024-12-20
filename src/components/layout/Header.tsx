@@ -24,10 +24,9 @@ export function Header() {
   }, []);
 
   const toggleLanguage = () => {
-    const newPath = isPortuguese
-      ? pathname?.replace('/pt', '/en') ?? '/en'
-      : pathname?.replace('/en', '/pt') ?? '/pt';
-    router.push(newPath);
+    if (!pathname) return;
+    const newPath = isPortuguese ? pathname.replace('/pt', '/en') : pathname.replace('/en', '/pt');
+    router.push(newPath || (isPortuguese ? '/en' : '/pt'));
   };
 
   return (
