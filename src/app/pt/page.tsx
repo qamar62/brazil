@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { TourCard } from '@/components/cards/TourCard';
+import { tours } from '@/data/tours';
 
 export default function HomePage() {
   return (
@@ -8,7 +10,7 @@ export default function HomePage() {
       <section className="relative h-[80vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://via.placeholder.com/1920x1080/31343C/FFFFFF?text=p"
+            src="https://via.placeholder.com/1920x1080/31343C/FFFFFF?text=."
             alt="Bela paisagem brasileira"
             fill
             className="object-cover"
@@ -18,32 +20,58 @@ export default function HomePage() {
         </div>
         <div className="container relative z-10 text-white">
           <h1 className="text-6xl font-bold mb-6">Descubra o Brasil</h1>
-          <p className="text-2xl mb-8 max-w-2xl">Experimente a magia do maior país da América do Sul. Das praias intocadas às cidades vibrantes, sua aventura começa aqui.</p>
-          <Link href="/pt/tours" className="btn-primary text-lg">
-            Explorar Passeios
+          <p className="text-2xl mb-8 max-w-2xl">
+            Experimente a magia do maior país da América do Sul. Das praias intocadas às cidades vibrantes, sua aventura começa aqui.
+          </p>
+          <Link
+            href="/tours"
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full inline-block font-medium transition-all"
+          >
+            Explorar Tours
           </Link>
         </div>
       </section>
 
-      {/* Featured Destinations */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+      {/* Featured Tours Section */}
+      <section className="py-16 bg-gray-50">
         <div className="container">
-          <h2 className="text-4xl font-bold mb-12 text-center">Destinos em Destaque</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">
+            Tours em Destaque
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {destinations.map((destination) => (
-              <div key={destination.title} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden group">
-                <div className="relative h-64">
-                  <Image
-                    src={destination.image}
-                    alt={destination.title}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6">
+            {tours.slice(0, 3).map((tour) => (
+              <TourCard 
+                key={tour.id} 
+                tour={tour} 
+                currency="BRL" 
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Destinations Section */}
+      <section className="py-16">
+        <div className="container">
+          <h2 className="text-3xl font-bold mb-8 text-center">
+            Destinos Populares
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {destinations.map((destination, index) => (
+              <div
+                key={index}
+                className="relative h-64 rounded-2xl overflow-hidden group"
+              >
+                <Image
+                  src={destination.image || `https://via.placeholder.com/600x400?text=${destination.title}`}
+                  alt={destination.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-6 text-white">
                   <h3 className="text-xl font-bold mb-2">{destination.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{destination.description}</p>
-                  <Link href="/pt/tours" className="text-primary hover:underline">Saiba mais →</Link>
+                  <p className="text-sm">{destination.description}</p>
                 </div>
               </div>
             ))}
@@ -102,18 +130,18 @@ const destinations = [
   {
     title: 'Rio de Janeiro',
     description: 'Experimente a cultura vibrante e os pontos turísticos icônicos do Rio',
-    image: '/images/rio.jpg',
-  },
-  {
-    title: 'Floresta Amazônica',
-    description: 'Explore a maior floresta tropical do mundo e sua incrível biodiversidade',
-    image: '/images/amazon.jpg',
+    image: 'https://via.placeholder.com/600x400?text=Rio'
   },
   {
     title: 'Salvador',
-    description: 'Descubra a rica história e a cultura colorida da capital da Bahia',
-    image: '/images/salvador.jpg',
+    description: 'Descubra a rica história e as praias deslumbrantes da Bahia',
+    image: 'https://via.placeholder.com/600x400?text=Salvador'
   },
+  {
+    title: 'Foz do Iguaçu',
+    description: 'Maravilhe-se com as impressionantes Cataratas do Iguaçu',
+    image: 'https://via.placeholder.com/600x400?text=Foz'
+  }
 ];
 
 const features = [
