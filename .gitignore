@@ -68,3 +68,7 @@ Thumbs.db
 
 # Yarn Integrity file
 .yarn-integrity
+backend/env/
+backend/db.sqlite3
+**migrations/
+**/__pycache__/

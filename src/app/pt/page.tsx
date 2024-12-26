@@ -1,37 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { TourCard } from '@/components/cards/TourCard';
+import { HeroSection } from '@/components/HeroSection';
 import { tours } from '@/data/tours';
 
 export default function HomePage() {
   return (
     <main className="flex-1">
-      {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://via.placeholder.com/1920x1080/31343C/FFFFFF?text=."
-            alt="Bela paisagem brasileira"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
-        <div className="container relative z-10 text-white">
-          <h1 className="text-6xl font-bold mb-6">Descubra o Brasil</h1>
-          <p className="text-2xl mb-8 max-w-2xl">
-            Experimente a magia do maior país da América do Sul. Das praias intocadas às cidades vibrantes, sua aventura começa aqui.
-          </p>
-          <Link
-            href="/tours"
-            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full inline-block font-medium transition-all"
-          >
-            Explorar Tours
-          </Link>
-        </div>
-      </section>
-
+      <HeroSection isPortuguese={true} />
       {/* Featured Tours Section */}
       <section className="py-16 bg-gray-50">
         <div className="container">

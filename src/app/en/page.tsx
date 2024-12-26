@@ -1,57 +1,13 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import heroBrazil from '../../../public/images/hero-brazil.jpg';
+import { HeroData, getHeroData } from '@/services/api';
+import { HeroSection } from '@/components/HeroSection';
 
 export default function HomePage() {
   return (
     <main className="flex-1">
-      {/* Hero Section */}
-      <section className="relative min-h-[100vh] md:min-h-[90vh] w-full">
-        <div className="absolute inset-0 w-full h-full">
-          <Image
-            src={heroBrazil}
-            alt="Beautiful Brazilian landscape"
-            placeholder="blur"
-            priority
-            quality={100}
-            fill
-            className="object-cover object-center"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/50" />
-        </div>
-        <div className="container relative z-10 mx-auto px-4 h-full flex items-center justify-center text-white">
-          <div className="max-w-4xl text-center pt-16 px-4 sm:px-6 md:px-8">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 font-montserrat leading-tight">
-              Discover Dubai 
-              <br className="md:hidden" />
-              from Brazil
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 md:mb-10 max-w-3xl mx-auto font-inter leading-relaxed">
-              Experience Dubai: Where Adventure Meets Elegance
-              <br className="hidden sm:block" />
-              🏜️ Golden dunes, glittering skyscrapers, and unforgettable memories await. 🌟
-              <br className="hidden sm:block" />
-              🌆 From the thrill of desert safaris to the allure of luxury, Dubai has it all.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                href="/en/tours/dubai"
-                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium transition-all hover:scale-105 hover:shadow-lg inline-block"
-              >
-                Explore Dubai Tours
-              </Link>
-              <Link
-                href="/en/contact"
-                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium transition-all hover:scale-105 hover:shadow-lg inline-block"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <HeroSection isPortuguese={false} />
       {/* Featured Destinations */}
       <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="container">

@@ -2,15 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Globe, ChevronDown, Sun, Moon } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { SiteSettings, getSiteSettings } from '@/services/api';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isToursDropdownOpen, setIsToursDropdownOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
   const { resolvedTheme, setTheme } = useTheme();
 
   const pathname = usePathname();
@@ -18,6 +21,8 @@ export function Header() {
   
   useEffect(() => {
     setMounted(true);
+    // Fetch site settings
+    getSiteSettings().then(setSettings).catch(console.error);
   }, []);
 
   function getIsPortuguese(path: string | null): boolean {
@@ -54,14 +59,23 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md' : 'bg-transparent'
       }`}
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            Brazil Travel
+          {/* Logo */}
+          <Link href={isPortuguese ? '/pt' : '/en'} className="flex items-center space-x-2">
+            {settings?.logo && (
+              <Image 
+                src={settings.logo} 
+                alt={settings.site_name} 
+                width={170} 
+                height={50} 
+                className="h-10 w-auto" 
+              />
+            )}
           </Link>
 
           {/* Desktop Navigation */}
@@ -118,6 +132,22 @@ export function Header() {
                 <Moon className="h-5 w-5" />
               ))}
             </button>
+
+            {/* Social Links */}
+            <div className="hidden md:flex items-center space-x-4">
+              {settings?.facebook_url && (
+                <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-primary">
+                  <span className="sr-only">Facebook</span>
+                  {/* Add Facebook Icon */}
+                </a>
+              )}
+              {settings?.instagram_url && (
+                <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-300 hover:text-primary">
+                  <span className="sr-only">Instagram</span>
+                  {/* Add Instagram Icon */}
+                </a>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
