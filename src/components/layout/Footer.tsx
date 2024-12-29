@@ -90,7 +90,7 @@ export function Footer() {
               <li className="text-sm text-gray-600 dark:text-gray-300">Rio de Janeiro</li>
               <li className="text-sm text-gray-600 dark:text-gray-300">São Paulo</li>
               <li className="text-sm text-gray-600 dark:text-gray-300">Salvador</li>
-              <li className="text-sm text-gray-600 dark:text-gray-300">Manaus</li>
+              <li className="text-sm text-gray-600 dark:text-gray-300">Manauss</li>
             </ul>
           </div>
 
