@@ -1,5 +1,5 @@
 # Web Framework
-Django==5.0.1
+Django==4.2.17
 
 # REST Framework
 djangorestframework==3.14.0
@@ -27,4 +27,3 @@ pytest-django==4.7.0
 # Code Formatting
 black==23.12.1
 flake8==7.0.0
-
