@@ -3,11 +3,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { HeroData, getHeroData } from '@/services/api';
 import { HeroSection } from '@/components/HeroSection';
+import EventTimeline from '../components/EventTimeline';
+import ExpandableGallery from '../components/ExpandableGallery';
 
 export default function HomePage() {
   return (
     <main className="flex-1">
       <HeroSection isPortuguese={false} />
+      
+      {/* Event Timeline */}
+      <section className="py-20 bg-white dark:bg-gray-900">
+        <EventTimeline />
+      </section>
+
+      {/* Expandable Gallery */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+        <ExpandableGallery />
+      </section>
+
       {/* Featured Destinations */}
       <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="container">
@@ -38,7 +51,7 @@ export default function HomePage() {
       <section className="py-20">
         <div className="container">
           <h2 className="text-4xl font-bold mb-12 text-center">Why Choose Us</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {features.map((feature) => (
               <div key={feature.title} className="text-center">
                 <div className="text-4xl mb-4">{feature.icon}</div>
@@ -114,6 +127,11 @@ const features = [
     icon: '💰',
     title: 'Best Value',
     description: 'Competitive prices without compromising on quality and experience.',
+  },
+  {
+    icon: '⚡',
+    title: '4 Tours in 1 Event',
+    description: '4 attractions in one Tour',
   },
 ];
 

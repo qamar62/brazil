@@ -1,0 +1,233 @@
+.timelineContainer {
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: var(--timeline-bg, #ffffff);
+  border-radius: 24px;
+  color: var(--timeline-text, #1a1a1a);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+:global(.dark) .timelineContainer {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  background: var(--title-gradient, linear-gradient(45deg, #2563eb, #3b82f6));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4rem;
+}
+
+:global(.dark) .title {
+  background: linear-gradient(45deg, #60a5fa, #93c5fd);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.timeline {
+  position: relative;
+  padding: 2rem 0;
+  overflow-x: hidden;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--timeline-line, linear-gradient(90deg, #2563eb, #3b82f6));
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+:global(.dark) .timelineLine {
+  background: linear-gradient(90deg, #60a5fa, #93c5fd);
+}
+
+.eventsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+.timelineEvent {
+  flex: 1;
+  min-width: 200px;
+}
+
+.eventCard {
+  background: var(--card-bg, rgba(255, 255, 255, 0.8));
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+:global(.dark) .eventCard {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.eventCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--card-gradient, linear-gradient(45deg, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.1)));
+  z-index: -1;
+  border-radius: 14px;
+}
+
+:global(.dark) .eventCard::before {
+  background: linear-gradient(45deg, rgba(96, 165, 250, 0.1), rgba(147, 197, 253, 0.1));
+}
+
+.eventCard.selected {
+  border-color: var(--selected-border, #2563eb);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+}
+
+:global(.dark) .eventCard.selected {
+  border-color: #60a5fa;
+  box-shadow: 0 10px 30px rgba(96, 165, 250, 0.2);
+}
+
+.eventIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--icon-color, #2563eb);
+}
+
+:global(.dark) .eventIcon {
+  color: #60a5fa;
+}
+
+.iconStyle {
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: transform 0.3s ease;
+}
+
+.eventCard:hover .iconStyle {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.dayBubble {
+  background: var(--bubble-gradient, linear-gradient(45deg, #2563eb, #3b82f6));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+:global(.dark) .dayBubble {
+  background: linear-gradient(45deg, #60a5fa, #93c5fd);
+}
+
+.dayBubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+}
+
+:global(.dark) .dayBubble:hover {
+  box-shadow: 0 5px 15px rgba(96, 165, 250, 0.3);
+}
+
+.tooltip {
+  background: var(--tooltip-bg, rgba(255, 255, 255, 0.95));
+  color: var(--tooltip-text, #1a1a1a);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-width: 200px;
+  text-align: center;
+}
+
+:global(.dark) .tooltip {
+  background: rgba(30, 41, 59, 0.95);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tooltipArrow {
+  fill: var(--tooltip-bg, rgba(255, 255, 255, 0.95));
+}
+
+:global(.dark) .tooltipArrow {
+  fill: rgba(30, 41, 59, 0.95);
+}
+
+.eventCard h3 {
+  color: var(--heading-color, #1a1a1a);
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+:global(.dark) .eventCard h3 {
+  color: #ffffff;
+}
+
+.eventDescription {
+  margin-top: 1rem;
+  color: var(--description-color, #4b5563);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+:global(.dark) .eventDescription {
+  color: #e0e0e0;
+}
+
+@media (max-width: 1024px) {
+  .eventsContainer {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .timelineLine {
+    width: 4px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .timelineEvent {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .eventCard {
+    margin: 0 auto;
+  }
+}
