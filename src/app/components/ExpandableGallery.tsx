@@ -24,7 +24,7 @@ const galleryImages: GalleryImage[] = [
   {
     id: 2,
     src: '/images/gallery/fom.jpg',
-    alt: 'Amazon Rainforest',
+    alt: 'future of museum',
     title: 'Future of Meuseum',
     description: 'Discover the wonders of the world\'s largest rainforest'
   },
@@ -62,7 +62,7 @@ const ExpandableGallery = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Discover Dubai
+        Event Gallery
       </motion.h2>
       
       <div className={styles.gallery}>
