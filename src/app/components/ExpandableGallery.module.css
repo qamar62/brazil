@@ -9,6 +9,13 @@
   transition: all 0.3s ease;
 }
 
+@media (max-width: 768px) {
+  .galleryContainer {
+    padding: 2rem 1rem;
+    margin: 0 1rem;
+  }
+}
+
 :global(.dark) .galleryContainer {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -26,6 +33,13 @@
   -webkit-text-fill-color: transparent;
 }
 
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
 :global(.dark) .title {
   background: linear-gradient(45deg, #60a5fa, #93c5fd);
   -webkit-background-clip: text;
@@ -40,6 +54,15 @@
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  .gallery {
+    flex-direction: column;
+    min-height: auto;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+}
+
 .imageContainer {
   position: relative;
   flex: 1;
@@ -47,6 +70,19 @@
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-height: 500px;
+}
+
+@media (max-width: 768px) {
+  .imageContainer {
+    min-height: 150px;
+    height: 150px;
+  }
+
+  .imageContainer.selected {
+    min-height: 300px;
+    height: 300px;
+  }
 }
 
 .imageContainer:hover {
@@ -87,11 +123,23 @@
   transition: all 0.3s ease;
 }
 
+@media (max-width: 768px) {
+  .overlay {
+    padding: 1rem;
+  }
+}
+
 .imageTitle {
   font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .imageTitle {
+    font-size: 1.2rem;
+  }
 }
 
 .imageDescription {
@@ -102,6 +150,14 @@
   max-width: 300px;
 }
 
+@media (max-width: 768px) {
+  .imageDescription {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    line-height: 1.4;
+  }
+}
+
 .selected {
   flex: 5;
 }
@@ -110,22 +166,19 @@
   transform: scale(1.05);
 }
 
+/* Fix for mobile scroll issues */
 @media (max-width: 768px) {
   .gallery {
-    flex-direction: column;
-    min-height: auto;
+    overflow-y: visible;
+    overflow-x: hidden;
   }
-
+  
   .imageContainer {
-    height: 250px;
-    transition: height 0.4s ease;
+    transform: none !important;
+    transition: height 0.3s ease;
   }
-
+  
   .selected {
-    height: 400px;
-  }
-
-  .imageDescription {
-    max-width: 100%;
+    flex: 1;
   }
 }
