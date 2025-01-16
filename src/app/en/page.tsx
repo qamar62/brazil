@@ -22,7 +22,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Destinations */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+      {/* <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="container">
           <h2 className="text-4xl font-bold mb-12 text-center">Featured Destinations</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -45,7 +45,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Why Choose Us */}
       <section className="py-20">
