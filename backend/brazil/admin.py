@@ -160,15 +160,42 @@ class EventAdmin(admin.ModelAdmin):
         obj.save()
         
         if is_new:
-            days = (obj.date_end - obj.date_start).days + 1
-            # Create default itinerary days
-            for day in range(1, days + 1):
+            # Create default 4 days itinerary regardless of actual duration
+            default_days = 4
+            default_itineraries = [
+                {
+                    'day': 1,
+                    'title': 'Day 1: Arrival & Welcome',
+                    'description': 'Arrival at destination, check-in, and welcome activities',
+                    'short_detail': 'Arrival & Welcome'
+                },
+                {
+                    'day': 2,
+                    'title': 'Day 2: Main Activities',
+                    'description': 'Full day of main activities and attractions',
+                    'short_detail': 'Main Activities'
+                },
+                {
+                    'day': 3,
+                    'title': 'Day 3: Exploration',
+                    'description': 'Exploring local attractions and culture',
+                    'short_detail': 'Exploration'
+                },
+                {
+                    'day': 4,
+                    'title': 'Day 4: Departure',
+                    'description': 'Final activities and departure arrangements',
+                    'short_detail': 'Departure'
+                }
+            ]
+            
+            for day_info in default_itineraries:
                 ItineraryDay.objects.create(
                     event=obj,
-                    day=day,
-                    title=f'Day {day}',
-                    description='Add description here',
-                    short_detail='Add short detail here'
+                    day=day_info['day'],
+                    title=day_info['title'],
+                    description=day_info['description'],
+                    short_detail=day_info['short_detail']
                 )
 
     def response_add(self, request, obj, post_url_continue=None):
