@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .models import (
     HeroModification, 
     Settings,
@@ -95,6 +97,8 @@ class ItineraryDayInline(admin.TabularInline):
     extra = 1
     fields = ('day', 'title', 'description', 'short_detail')
     ordering = ('day',)
+    min_num = 1
+    validate_min = True
 
 @admin.register(Option)
 class OptionAdmin(admin.ModelAdmin):
@@ -143,22 +147,35 @@ class EventAdmin(admin.ModelAdmin):
         return format_html('<span style="color: green;">{} spots</span>', spots)
     spots_left.short_description = 'Available Spots'
 
+    def get_inline_instances(self, request, obj=None):
+        inline_instances = super().get_inline_instances(request, obj)
+        if obj is None:  # This is an add form
+            # Remove ItineraryDayInline when adding new event
+            inline_instances = [inline for inline in inline_instances 
+                              if not isinstance(inline, ItineraryDayInline)]
+        return inline_instances
+
     def save_model(self, request, obj, form, change):
+        is_new = obj.pk is None
         obj.save()
-        if not change:  # Only for new events
-            # Calculate number of days
+        
+        if is_new:
             days = (obj.date_end - obj.date_start).days + 1
-            # Create default itinerary days only if they don't exist
-            existing_days = set(obj.itinerary_days.values_list('day', flat=True))
+            # Create default itinerary days
             for day in range(1, days + 1):
-                if day not in existing_days:
-                    ItineraryDay.objects.create(
-                        event=obj,
-                        day=day,
-                        title=f'Day {day}',
-                        description='Add description here',
-                        short_detail='Add short detail here'
-                    )
+                ItineraryDay.objects.create(
+                    event=obj,
+                    day=day,
+                    title=f'Day {day}',
+                    description='Add description here',
+                    short_detail='Add short detail here'
+                )
+
+    def response_add(self, request, obj, post_url_continue=None):
+        # After saving a new event, redirect to the change form
+        return HttpResponseRedirect(
+            reverse('admin:brazil_event_change', args=[obj.pk])
+        )
 
 @admin.register(EventImage)
 class EventImageAdmin(admin.ModelAdmin):
