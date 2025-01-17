@@ -144,20 +144,21 @@ class EventAdmin(admin.ModelAdmin):
     spots_left.short_description = 'Available Spots'
 
     def save_model(self, request, obj, form, change):
+        obj.save()
         if not change:  # Only for new events
-            obj.save()
-            # Create default itinerary days based on event duration
+            # Calculate number of days
             days = (obj.date_end - obj.date_start).days + 1
+            # Create default itinerary days only if they don't exist
+            existing_days = set(obj.itinerary_days.values_list('day', flat=True))
             for day in range(1, days + 1):
-                ItineraryDay.objects.create(
-                    event=obj,
-                    day=day,
-                    title=f'Day {day}',
-                    description='Add description here',
-                    short_detail='Add short detail here'
-                )
-        else:
-            obj.save()
+                if day not in existing_days:
+                    ItineraryDay.objects.create(
+                        event=obj,
+                        day=day,
+                        title=f'Day {day}',
+                        description='Add description here',
+                        short_detail='Add short detail here'
+                    )
 
 @admin.register(EventImage)
 class EventImageAdmin(admin.ModelAdmin):
