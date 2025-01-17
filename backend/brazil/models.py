@@ -1,5 +1,6 @@
 from django.db import models
-from django.core.validators import URLValidator
+from django.core.validators import URLValidator, MinValueValidator
+from django.utils import timezone
 
 class HeroModification(models.Model):
     image = models.ImageField(upload_to='hero_images/')
@@ -54,3 +55,103 @@ class Settings(models.Model):
     
     def __str__(self):
         return self.site_name_en
+
+class Option(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    price_adjustment = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    
+    def __str__(self):
+        return self.name
+
+class EventImage(models.Model):
+    event = models.ForeignKey('Event', related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='event_images/')
+    alt_text = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    is_featured = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Image for {self.event.name} - {self.title}"
+
+class ItineraryDay(models.Model):
+    event = models.ForeignKey('Event', related_name='itinerary_days', on_delete=models.CASCADE)
+    day = models.PositiveIntegerField()
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    short_detail = models.CharField(max_length=200, help_text="Brief description for timeline view")
+
+    class Meta:
+        ordering = ['day']
+        unique_together = ['event', 'day']
+
+    def __str__(self):
+        return f"Day {self.day} - {self.title}"
+
+class Event(models.Model):
+    AVAILABILITY_CHOICES = [
+        ('available', 'Available'),
+        ('limited', 'Limited Spots'),
+        ('sold_out', 'Sold Out'),
+        ('upcoming', 'Upcoming'),
+    ]
+
+    name = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    detail = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])
+    date_start = models.DateTimeField()
+    date_end = models.DateTimeField()
+    
+    # Additional useful fields
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    availability_status = models.CharField(
+        max_length=20,
+        choices=AVAILABILITY_CHOICES,
+        default='upcoming'
+    )
+    max_participants = models.PositiveIntegerField(default=20)
+    current_participants = models.PositiveIntegerField(default=0)
+    options = models.ManyToManyField(Option, related_name='events', blank=True)
+    is_featured = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        ordering = ['date_start']
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        # Ensure date_end is after date_start
+        if self.date_end and self.date_start and self.date_end < self.date_start:
+            raise ValueError("End date must be after start date")
+        
+        # Update availability status based on participants
+        if self.current_participants >= self.max_participants:
+            self.availability_status = 'sold_out'
+        elif self.current_participants >= (self.max_participants * 0.8):
+            self.availability_status = 'limited'
+        elif self.date_start > timezone.now():
+            self.availability_status = 'upcoming'
+        else:
+            self.availability_status = 'available'
+
+        super().save(*args, **kwargs)
+
+    @property
+    def duration_days(self):
+        if self.date_start and self.date_end:
+            return (self.date_end - self.date_start).days + 1
+        return 0
+
+    @property
+    def spots_left(self):
+        return max(0, self.max_participants - self.current_participants)
+
+    @property
+    def is_active(self):
+        now = timezone.now()
+        return self.date_start <= now <= self.date_end
